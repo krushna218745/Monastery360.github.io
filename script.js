@@ -534,3 +534,32 @@ function showNotification(message, type = 'info') {
 
 // Export functions for global access
 window.loadMonasteryTour = loadMonasteryTour;
+
+// Entry Emphasis Overlay logic
+(function initEntryEmphasis() {
+  const overlay = document.getElementById('entry-emphasis');
+  if (!overlay) return;
+
+  const hideOverlay = () => {
+    if (!overlay || overlay.classList.contains('is-hidden')) return;
+    overlay.classList.add('is-hidden');
+    // Remove from DOM after transition to avoid intercepting clicks
+    setTimeout(() => overlay.remove(), 600);
+    window.removeEventListener('keydown', onKeyDown);
+    overlay.removeEventListener('click', onClick);
+  };
+
+  const onClick = () => hideOverlay();
+  const onKeyDown = (e) => {
+    if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') hideOverlay();
+  };
+
+  // Auto-dismiss after 2.2s
+  const autoTimer = setTimeout(hideOverlay, 2200);
+
+  overlay.addEventListener('click', onClick);
+  window.addEventListener('keydown', onKeyDown);
+
+  // In case the image takes time to load, ensure it's visible immediately
+  requestAnimationFrame(() => overlay.classList.remove('is-hidden'));
+})();
