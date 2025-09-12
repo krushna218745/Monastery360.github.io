@@ -10,7 +10,7 @@ body {
   line-height: 1.6;
   color: #000;
   font-weight: 700;
-  background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), url('assets/mainpagebg.png') center/cover fixed no-repeat;
+  background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), url('assets/background.jpeg') center/cover fixed no-repeat;
   min-height: 100vh;
 }
 
