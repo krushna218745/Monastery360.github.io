@@ -5,6 +5,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
@@ -33,6 +37,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 0 2rem;
+  position: relative;
 }
 
 .nav-logo {
@@ -57,9 +62,48 @@ body {
   to { transform: rotate(360deg); }
 }
 
+/* Hamburger Menu */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 1002;
+}
+
+.hamburger-line {
+  width: 25px;
+  height: 3px;
+  background: #b20404;
+  margin: 3px 0;
+  transition: 0.3s;
+  border-radius: 2px;
+}
+
+.hamburger.active .hamburger-line:nth-child(1) {
+  transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.hamburger.active .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active .hamburger-line:nth-child(3) {
+  transform: rotate(45deg) translate(-5px, -6px);
+}
+
 .nav-menu {
   display: flex;
   gap: 2rem;
+  align-items: center;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .nav-link {
@@ -82,21 +126,102 @@ body {
   background: white;
 }
 
+/* Progress Indicator */
+.progress-indicator {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.progress-bar-container {
+  width: 4px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  width: 100%;
+  background: #b20404;
+  border-radius: 2px;
+  transition: height 0.3s ease;
+  height: 0%;
+}
+
+.section-dots {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.dot.active,
+.dot:hover {
+  background: #b20404;
+  border-color: white;
+  transform: scale(1.2);
+}
+
+/* Scroll to Top Button */
+.scroll-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  background: #b20404;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: none;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.scroll-to-top:hover {
+  background: #8b0303;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.scroll-to-top i {
+  font-size: 1.2rem;
+}
+
 /* Main Content */
 .main-content {
   margin-top: 80px;
-  min-height: calc(100vh - 80px);
 }
 
 .content-section {
-  display: none;
-  padding: 2rem;
+  display: block;
+  padding: 4rem 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  min-height: 100vh;
+  scroll-margin-top: 100px;
 }
 
-.content-section.active {
-  display: block;
+.content-section:first-child {
+  padding-top: 6rem;
 }
 
 /* Hero Section */
@@ -149,15 +274,22 @@ body {
 .section-header {
   text-align: center;
   margin-bottom: 2rem;
-  background: rgba(255, 255, 255, 0.55);
+  background: rgba(1, 0, 0, 0.5);
   padding: 2rem;
-  border-radius: 10px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .section-header h2 {
   font-size: 2.5rem;
-  color: #000;
+  color: #f6efef;
   margin-bottom: 0.5rem;
+}
+
+.section-header p {
+  color: #fbf9f9;
+  opacity: 0.9;
+  font-size: 1.1rem;
 }
 
 .section-header i {
@@ -171,9 +303,10 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
-  background: rgba(255, 255, 255, 0.55);
+  background: rgba(1, 0, 0, 0.5);
   padding: 1rem;
-  border-radius: 10px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .monastery-selector select {
@@ -211,22 +344,28 @@ body {
 }
 
 .tour-info {
-  background: rgba(255, 255, 255, 0.55);
+  background: rgba(1, 0, 0, 0.5);
   padding: 1.5rem;
-  border-radius: 10px;
+  border-radius: 15px;
   margin-top: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .monastery-details h3 {
-  color: #b20404;
+  color: #f6efef;
   margin-bottom: 0.5rem;
+}
+
+.monastery-details p {
+  color: #fbf9f9;
+  opacity: 0.9;
 }
 
 .monastery-meta {
   display: flex;
   gap: 2rem;
   margin-top: 1rem;
-  color: #666;
+  color: #fcfcfc;
 }
 
 /* Interactive Map */
@@ -235,9 +374,10 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
-  background: rgba(255, 255, 255, 0.55);
+  background: rgba(1, 0, 0, 0.5);
   padding: 1rem;
-  border-radius: 10px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .filter-options {
@@ -274,15 +414,17 @@ body {
   justify-content: center;
   gap: 2rem;
   margin-top: 1rem;
-  background: rgba(255, 255, 255, 0.55);
+  background: rgba(1, 0, 0, 0.5);
   padding: 1rem;
-  border-radius: 10px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .legend-item {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  color: #fcfcfc;
 }
 
 .legend-icon {
@@ -297,10 +439,11 @@ body {
 
 /* Digital Archives */
 .archive-search {
-  background: rgba(255, 255, 255, 0.55);
+  background: rgba(1, 0, 0, 0.5);
   padding: 1.5rem;
-  border-radius: 10px;
+  border-radius: 15px;
   margin-bottom: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .search-bar {
@@ -343,10 +486,10 @@ body {
 }
 
 .archive-item {
-  background: rgba(255, 255, 255, 0.55);
-  border-radius: 10px;
+  background: rgba(1, 0, 0, 0.5);
+  border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
 }
 
@@ -364,6 +507,16 @@ body {
   padding: 1rem;
 }
 
+.archive-info h4 {
+  color: #f6efef;
+  margin-bottom: 0.5rem;
+}
+
+.archive-info p {
+  color: #fbf9f9;
+  opacity: 0.9;
+}
+
 .archive-category {
   background: #b20404;
   color: white;
@@ -374,10 +527,11 @@ body {
 
 /* Cultural Calendar */
 .calendar-container {
-  background: rgba(255, 255, 255, 0.55);
-  border-radius: 10px;
+  background: rgba(1, 0, 0, 0.5);
+  border-radius: 15px;
   padding: 1.5rem;
   margin-bottom: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .calendar-header {
@@ -422,9 +576,15 @@ body {
 }
 
 .events-sidebar {
-  background: rgba(255, 255, 255, 0.55);
-  border-radius: 10px;
+  background: rgba(1, 0, 0, 0.5);
+  border-radius: 15px;
   padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.events-sidebar h4 {
+  color: #f6efef;
+  margin-bottom: 1rem;
 }
 
 .event-item {
@@ -445,11 +605,23 @@ body {
   min-width: 60px;
 }
 
+.event-details h5 {
+  color: #f6efef;
+  margin-bottom: 0.25rem;
+}
+
+.event-details p {
+  color: #fbf9f9;
+  opacity: 0.9;
+  font-size: 0.9rem;
+}
+
 /* Audio Guide */
 .audio-guide-container {
-  background: rgba(255, 255, 255, 0.55);
-  border-radius: 10px;
+  background: rgba(1, 0, 0, 0.5);
+  border-radius: 15px;
   padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .location-status {
@@ -541,6 +713,11 @@ body {
   padding: 1rem;
 }
 
+.audio-tracks h4 {
+  color: #f6efef;
+  margin-bottom: 1rem;
+}
+
 .track-item {
   display: flex;
   align-items: center;
@@ -567,17 +744,75 @@ body {
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .nav-container {
-    flex-direction: column;
-    gap: 1rem;
+    padding: 0 1rem;
   }
   
   .nav-menu {
-    flex-wrap: wrap;
-    justify-content: center;
+    gap: 1.5rem;
   }
   
+  .content-section {
+    padding: 3rem 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Mobile Navigation */
+  .hamburger {
+    display: flex;
+  }
+  
+  .nav-menu {
+    position: fixed;
+    top: 80px;
+    left: -100%;
+    width: 100%;
+    height: calc(100vh - 80px);
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 2rem 0;
+    gap: 2rem;
+    transition: left 0.3s ease;
+    z-index: 999;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .nav-menu.active {
+    left: 0;
+  }
+  
+  .nav-link {
+    font-size: 1.2rem;
+    padding: 1rem 2rem;
+    width: 80%;
+    text-align: center;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+  }
+  
+  .nav-link:hover {
+    background: rgba(178, 4, 4, 0.1);
+    transform: translateX(5px);
+  }
+  
+  .nav-actions {
+    position: absolute;
+    right: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .language-selector select {
+    font-size: 0.9rem;
+    padding: 0.4rem;
+  }
+  
+  /* Content adjustments */
   .hero h1 {
     font-size: 2rem;
   }
@@ -601,6 +836,82 @@ body {
   .player-info {
     flex-direction: column;
     text-align: center;
+  }
+  
+  /* Mobile progress indicator */
+  .progress-indicator {
+    right: 10px;
+    transform: translateY(-50%) scale(0.8);
+  }
+  
+  .progress-bar-container {
+    height: 150px;
+  }
+  
+  .dot {
+    width: 10px;
+    height: 10px;
+  }
+  
+  .scroll-to-top {
+    bottom: 20px;
+    right: 20px;
+    width: 45px;
+    height: 45px;
+  }
+  
+  .content-section {
+    padding: 2rem 1rem;
+  }
+  
+  .section-header h2 {
+    font-size: 2rem;
+  }
+  
+  .section-header p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-container {
+    padding: 0 0.5rem;
+  }
+  
+  .nav-logo {
+    font-size: 1.2rem;
+  }
+  
+  .nav-logo i {
+    font-size: 1.5rem;
+  }
+  
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+  
+  .hero p {
+    font-size: 1rem;
+  }
+  
+  .section-header h2 {
+    font-size: 1.8rem;
+  }
+  
+  .content-section {
+    padding: 1.5rem 0.5rem;
+  }
+  
+  .progress-indicator {
+    right: 5px;
+    transform: translateY(-50%) scale(0.7);
+  }
+  
+  .scroll-to-top {
+    bottom: 15px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
   }
 }
 
