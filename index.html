@@ -77,19 +77,19 @@
     
     <!-- Home Section -->
     <section id="home-section" class="content-section active">
-      <div class="hero">
+      <div class="hero reveal">
         <h1>Discover Sikkim's Sacred Heritage</h1>
         <p>Explore over 200 monasteries through immersive virtual tours, interactive maps, and rich digital archives</p>
         <div class="hero-stats">
-          <div class="stat">
+          <div class="stat reveal-delay-1">
             <span class="stat-number">200+</span>
             <span class="stat-label">Monasteries</span>
           </div>
-          <div class="stat">
+          <div class="stat reveal-delay-2">
             <span class="stat-number">17th-18th</span>
             <span class="stat-label">Century Heritage</span>
           </div>
-          <div class="stat">
+          <div class="stat reveal-delay-3">
             <span class="stat-number">4</span>
             <span class="stat-label">Languages</span>
           </div>
@@ -99,12 +99,12 @@
 
     <!-- Virtual Tours Section -->
     <section id="tours-section" class="content-section">
-      <div class="section-header">
+      <div class="section-header reveal">
         <h2><i class="fas fa-vr-cardboard"></i> Virtual Tours</h2>
         <p>Experience 360° panoramic views with narrated walkthroughs</p>
       </div>
       
-      <div class="tour-controls">
+      <div class="tour-controls reveal-left">
         <div class="monastery-selector">
           <select id="monasterySelect">
             <option value="rumtek">Rumtek Monastery</option>
@@ -123,9 +123,9 @@
         </div>
       </div>
 
-      <div id="viewer" class="panorama-viewer"></div>
+      <div id="viewer" class="panorama-viewer reveal-scale"></div>
       
-      <div class="tour-info">
+      <div class="tour-info reveal">
         <div id="monasteryInfo" class="monastery-details">
           <h3>Rumtek Monastery</h3>
           <p>Built in the 1960s, Rumtek is the largest monastery in Sikkim and serves as the seat of the Karmapa.</p>
@@ -140,12 +140,12 @@
 
     <!-- Interactive Map Section -->
     <section id="map-section" class="content-section">
-      <div class="section-header">
+      <div class="section-header reveal">
         <h2><i class="fas fa-map-marked-alt"></i> Interactive Map</h2>
         <p>Explore monastery locations with travel routes and nearby attractions</p>
       </div>
       
-      <div class="map-controls">
+      <div class="map-controls reveal-left">
         <div class="filter-options">
           <button class="filter-btn active" data-filter="all">All Monasteries</button>
           <button class="filter-btn" data-filter="kagyu">Kagyu</button>
@@ -162,7 +162,7 @@
         </div>
       </div>
 
-      <div id="map" class="interactive-map"></div>
+      <div id="map" class="interactive-map reveal-scale"></div>
       
       <div class="map-legend">
         <div class="legend-item">
@@ -231,12 +231,12 @@
 
     <!-- Cultural Calendar Section -->
     <section id="calendar-section" class="content-section">
-      <div class="section-header">
+      <div class="section-header reveal">
         <h2><i class="fas fa-calendar-alt"></i> Cultural Calendar</h2>
         <p>Discover upcoming festivals, events, and rituals</p>
       </div>
       
-      <div class="calendar-container">
+      <div class="calendar-container reveal-scale">
         <div class="calendar-header">
           <button id="prevMonth" class="calendar-nav"><i class="fas fa-chevron-left"></i></button>
           <h3 id="currentMonth">December 2024</h3>
@@ -255,8 +255,15 @@
         </div>
       </div>
 
-      <div class="events-sidebar">
+      <div class="events-sidebar reveal-right">
         <h4>Upcoming Events</h4>
+        <div class="event-item">
+          <div class="event-date">Dec 10</div>
+          <div class="event-details">
+            <h5>Manjushri Day</h5>
+            <p>Wisdom and learning celebration</p>
+          </div>
+        </div>
         <div class="event-item">
           <div class="event-date">Dec 15</div>
           <div class="event-details">
@@ -269,6 +276,48 @@
           <div class="event-details">
             <h5>Winter Solstice Prayers</h5>
             <p>Special prayers at Pemayangtse Monastery</p>
+          </div>
+        </div>
+        <div class="event-item">
+          <div class="event-date">Jan 15</div>
+          <div class="event-details">
+            <h5>Monlam Chenmo</h5>
+            <p>Great Prayer Festival</p>
+          </div>
+        </div>
+        <div class="event-item">
+          <div class="event-date">Feb 15</div>
+          <div class="event-details">
+            <h5>Chotrul Duchen</h5>
+            <p>Miracles of Buddha Festival</p>
+          </div>
+        </div>
+        <div class="event-item">
+          <div class="event-date">Mar 15</div>
+          <div class="event-details">
+            <h5>Avalokiteshvara Day</h5>
+            <p>Compassion and loving-kindness</p>
+          </div>
+        </div>
+        <div class="event-item">
+          <div class="event-date">Apr 15</div>
+          <div class="event-details">
+            <h5>Saka Dawa</h5>
+            <p>Buddha's birth and enlightenment</p>
+          </div>
+        </div>
+        <div class="event-item">
+          <div class="event-date">May 15</div>
+          <div class="event-details">
+            <h5>Saga Dawa</h5>
+            <p>Buddha's birth, enlightenment, and parinirvana</p>
+          </div>
+        </div>
+        <div class="event-item">
+          <div class="event-date">Sep 22</div>
+          <div class="event-details">
+            <h5>Lhabab Duchen</h5>
+            <p>Buddha's descent from heaven</p>
           </div>
         </div>
       </div>
