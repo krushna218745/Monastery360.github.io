@@ -7,6 +7,8 @@ let panoramaViewer;
 let currentLanguage = 'en';
 let isAudioPlaying = false;
 let currentTrack = 0;
+let isMobile = false;
+let isTablet = false;
 
 // Monastery data
 const monasteries = {
@@ -96,36 +98,132 @@ const translations = {
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
+  detectDevice();
   initializeNavigation();
+  initializeHamburgerMenu();
   initializePanoramaViewer();
   initializeMap();
   initializeAudioGuide();
   initializeCalendar();
   initializeLanguageSelector();
   initializeArchiveSearch();
+  initializeScrollToTop();
+  handleResize();
 });
+
+// Device Detection
+function detectDevice() {
+  const userAgent = navigator.userAgent;
+  const screenWidth = window.innerWidth;
+  
+  // Detect mobile devices
+  isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent) || screenWidth <= 768;
+  
+  // Detect tablets
+  isTablet = /iPad|Android(?!.*Mobile)/i.test(userAgent) || (screenWidth > 768 && screenWidth <= 1024);
+  
+  // Add device class to body
+  document.body.classList.add(isMobile ? 'mobile' : isTablet ? 'tablet' : 'desktop');
+  
+  console.log('Device detected:', { isMobile, isTablet, screenWidth });
+}
+
+// Handle window resize
+function handleResize() {
+  window.addEventListener('resize', () => {
+    const newScreenWidth = window.innerWidth;
+    const wasMobile = isMobile;
+    
+    detectDevice();
+    
+    // Close mobile menu if switching from mobile to desktop
+    if (wasMobile && !isMobile) {
+      closeMobileMenu();
+    }
+    
+    // Reinitialize map if needed
+    if (map && newScreenWidth > 768) {
+      setTimeout(() => map.invalidateSize(), 100);
+    }
+  });
+}
+
+// Hamburger Menu functionality
+function initializeHamburgerMenu() {
+  const hamburger = document.getElementById('hamburger');
+  const navMenu = document.getElementById('nav-menu');
+  const navLinks = document.querySelectorAll('.nav-link');
+  
+  if (hamburger && navMenu) {
+    hamburger.addEventListener('click', () => {
+      toggleMobileMenu();
+    });
+    
+    // Close menu when clicking on nav links
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if (isMobile) {
+          closeMobileMenu();
+        }
+      });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (isMobile && !hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+        closeMobileMenu();
+      }
+    });
+  }
+}
+
+function toggleMobileMenu() {
+  const hamburger = document.getElementById('hamburger');
+  const navMenu = document.getElementById('nav-menu');
+  
+  if (hamburger && navMenu) {
+    hamburger.classList.toggle('active');
+    navMenu.classList.toggle('active');
+    
+    // Prevent body scroll when menu is open
+    if (navMenu.classList.contains('active')) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }
+}
+
+function closeMobileMenu() {
+  const hamburger = document.getElementById('hamburger');
+  const navMenu = document.getElementById('nav-menu');
+  
+  if (hamburger && navMenu) {
+    hamburger.classList.remove('active');
+    navMenu.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
 
 // Navigation functionality
 function initializeNavigation() {
   const navLinks = document.querySelectorAll('.nav-link');
   const sections = document.querySelectorAll('.content-section');
+  const dots = document.querySelectorAll('.dot');
 
+  // Handle navigation link clicks
   navLinks.forEach(link => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
       
-      // Remove active class from all links and sections
-      navLinks.forEach(l => l.classList.remove('active'));
-      sections.forEach(s => s.classList.remove('active'));
-      
-      // Add active class to clicked link
-      link.classList.add('active');
-      
-      // Show corresponding section
       const sectionId = link.getAttribute('data-section') + '-section';
       const targetSection = document.getElementById(sectionId);
+      
       if (targetSection) {
-        targetSection.classList.add('active');
+        targetSection.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        });
         
         // Initialize section-specific functionality
         if (sectionId === 'map-section') {
@@ -134,21 +232,90 @@ function initializeNavigation() {
       }
     });
   });
+
+  // Handle dot clicks
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const sectionId = dot.getAttribute('data-section') + '-section';
+      const targetSection = document.getElementById(sectionId);
+      
+      if (targetSection) {
+        targetSection.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    });
+  });
+
+  // Handle scroll-based active section detection
+  window.addEventListener('scroll', () => {
+    updateActiveSection();
+    updateProgressBar();
+  });
+}
+
+// Update active section based on scroll position
+function updateActiveSection() {
+  const sections = document.querySelectorAll('.content-section');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const dots = document.querySelectorAll('.dot');
+  
+  let currentSection = '';
+  
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop - 150;
+    const sectionHeight = section.offsetHeight;
+    const scrollTop = window.pageYOffset;
+    
+    if (scrollTop >= sectionTop && scrollTop < sectionTop + sectionHeight) {
+      currentSection = section.id;
+    }
+  });
+  
+  // Update active states
+  navLinks.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('data-section') + '-section' === currentSection) {
+      link.classList.add('active');
+    }
+  });
+  
+  dots.forEach(dot => {
+    dot.classList.remove('active');
+    if (dot.getAttribute('data-section') + '-section' === currentSection) {
+      dot.classList.add('active');
+    }
+  });
+}
+
+// Update progress bar based on scroll position
+function updateProgressBar() {
+  const progressBar = document.getElementById('progressBar');
+  if (!progressBar) return;
+  
+  const scrollTop = window.pageYOffset;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const scrollPercent = (scrollTop / docHeight) * 100;
+  
+  progressBar.style.height = scrollPercent + '%';
 }
 
 // Panorama viewer initialization
 function initializePanoramaViewer() {
   const viewerElement = document.getElementById('viewer');
   if (viewerElement) {
-    panoramaViewer = pannellum.viewer('viewer', {
+    // Adjust panorama settings based on device
+    const panoramaConfig = {
       type: 'equirectangular',
       panorama: 'assets/monastery1.jpg',
       autoLoad: true,
-      showControls: true,
+      showControls: !isMobile, // Hide controls on mobile for cleaner look
       showFullscreenCtrl: true,
-      showZoomCtrl: true,
-      mouseZoom: true,
-      keyboardZoom: true,
+      showZoomCtrl: !isMobile,
+      mouseZoom: !isMobile, // Disable mouse zoom on mobile
+      keyboardZoom: !isMobile,
+      touchPanSpeed: isMobile ? 2 : 1, // Faster touch pan on mobile
       hotSpots: [
         {
           pitch: 14.1,
@@ -165,7 +332,9 @@ function initializePanoramaViewer() {
           URL: '#'
         }
       ]
-    });
+    };
+    
+    panoramaViewer = pannellum.viewer('viewer', panoramaConfig);
   }
 
   // Monastery selector
@@ -219,7 +388,10 @@ function updateMonasteryInfo(monastery) {
 function initializeMap() {
   const mapElement = document.getElementById('map');
   if (mapElement) {
-    map = L.map('map').setView([27.3389, 88.6065], 9);
+    // Adjust zoom level based on device
+    const initialZoom = isMobile ? 8 : isTablet ? 9 : 10;
+    
+    map = L.map('map').setView([27.3389, 88.6065], initialZoom);
     
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
@@ -282,8 +454,14 @@ function filterMonasteries(filter) {
 
 // Load monastery tour from map
 function loadMonasteryTour(monasteryKey) {
-  // Switch to tours section
-  document.querySelector('[data-section="tours"]').click();
+  // Scroll to tours section
+  const toursSection = document.getElementById('tours-section');
+  if (toursSection) {
+    toursSection.scrollIntoView({ 
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }
   
   // Update monastery selector
   const monasterySelect = document.getElementById('monasterySelect');
@@ -530,6 +708,30 @@ function showNotification(message, type = 'info') {
   setTimeout(() => {
     notification.remove();
   }, 3000);
+}
+
+// Scroll to top functionality
+function initializeScrollToTop() {
+  const scrollToTopBtn = document.getElementById('scrollToTop');
+  
+  if (scrollToTopBtn) {
+    // Show/hide button based on scroll position
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        scrollToTopBtn.style.display = 'block';
+      } else {
+        scrollToTopBtn.style.display = 'none';
+      }
+    });
+    
+    // Scroll to top when clicked
+    scrollToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  }
 }
 
 // Export functions for global access
