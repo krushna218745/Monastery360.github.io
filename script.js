@@ -76,6 +76,25 @@ const audioTracks = [
   }
 ];
 
+// Festival data with dates
+const festivals = [
+  { name: 'Losar Festival', month: 11, day: 15, description: 'Tibetan New Year celebration' },
+  { name: 'Winter Solstice Prayers', month: 11, day: 22, description: 'Special prayers and rituals' },
+  { name: 'Saga Dawa', month: 4, day: 15, description: 'Buddha\'s birth, enlightenment, and parinirvana' },
+  { name: 'Monlam Chenmo', month: 0, day: 15, description: 'Great Prayer Festival' },
+  { name: 'Chotrul Duchen', month: 1, day: 15, description: 'Miracles of Buddha Festival' },
+  { name: 'Saka Dawa', month: 3, day: 15, description: 'Buddha\'s birth and enlightenment' },
+  { name: 'Drukpa Tsezhi', month: 5, day: 10, description: 'Buddha\'s first teaching' },
+  { name: 'Chokhor Duchen', month: 6, day: 4, description: 'Buddha\'s first teaching anniversary' },
+  { name: 'Lhabab Duchen', month: 8, day: 22, description: 'Buddha\'s descent from heaven' },
+  { name: 'Ganden Ngamchoe', month: 9, day: 25, description: 'Tsongkhapa\'s passing' },
+  { name: 'Lha Bab Duchen', month: 10, day: 9, description: 'Buddha\'s descent from Tushita' },
+  { name: 'Guru Rinpoche Day', month: 5, day: 10, description: 'Padmasambhava\'s birthday' },
+  { name: 'Medicine Buddha Day', month: 7, day: 8, description: 'Healing and medicine practices' },
+  { name: 'Avalokiteshvara Day', month: 2, day: 15, description: 'Compassion and loving-kindness' },
+  { name: 'Manjushri Day', month: 11, day: 10, description: 'Wisdom and learning celebration' }
+];
+
 // Translations
 const translations = {
   en: {
@@ -108,6 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
   initializeLanguageSelector();
   initializeArchiveSearch();
   initializeScrollToTop();
+  initializeScrollReveal();
   handleResize();
 });
 
@@ -600,6 +620,9 @@ function updateCalendarDisplay(date) {
     const existingDays = calendarGrid.querySelectorAll('.calendar-day:not(.header)');
     existingDays.forEach(day => day.remove());
     
+    // Get today's date for comparison
+    const today = new Date();
+    
     // Generate calendar days
     const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
     const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
@@ -619,11 +642,19 @@ function updateCalendarDisplay(date) {
         dayElement.style.opacity = '0.3';
       }
       
-      // Add event indicators (sample events)
-      if (currentDay.getDate() === 15 && currentDay.getMonth() === date.getMonth()) {
-        dayElement.style.background = '#764ba2';
-        dayElement.style.color = 'white';
-        dayElement.title = 'Losar Festival';
+      // Check if this is today's date
+      if (currentDay.toDateString() === today.toDateString()) {
+        dayElement.classList.add('today');
+      }
+      
+      // Add festival indicators
+      const festival = festivals.find(f => 
+        f.day === currentDay.getDate() && f.month === currentDay.getMonth()
+      );
+      
+      if (festival) {
+        dayElement.classList.add('event');
+        dayElement.title = festival.name + ' - ' + festival.description;
       }
       
       calendarGrid.appendChild(dayElement);
@@ -732,6 +763,31 @@ function initializeScrollToTop() {
       });
     });
   }
+}
+
+// Scroll Reveal functionality
+function initializeScrollReveal() {
+  const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .reveal-fade');
+  
+  const revealOnScroll = () => {
+    revealElements.forEach(element => {
+      const elementTop = element.getBoundingClientRect().top;
+      const elementVisible = 150;
+      
+      if (elementTop < window.innerHeight - elementVisible) {
+        element.classList.add('active');
+      }
+    });
+  };
+  
+  // Initial check
+  revealOnScroll();
+  
+  // Listen for scroll events
+  window.addEventListener('scroll', revealOnScroll);
+  
+  // Re-check on resize
+  window.addEventListener('resize', revealOnScroll);
 }
 
 // Export functions for global access
