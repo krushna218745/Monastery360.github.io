@@ -351,14 +351,39 @@ body {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
+.monastery-info-container {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.monastery-photo {
+  flex: 0 0 300px;
+}
+
+.monastery-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.monastery-details {
+  flex: 1;
+}
+
 .monastery-details h3 {
   color: #f6efef;
   margin-bottom: 0.5rem;
+  font-size: 1.8rem;
 }
 
 .monastery-details p {
   color: #fbf9f9;
   opacity: 0.9;
+  line-height: 1.6;
+  margin-bottom: 1rem;
 }
 
 .monastery-meta {
@@ -366,6 +391,80 @@ body {
   gap: 2rem;
   margin-top: 1rem;
   color: #fcfcfc;
+}
+
+/* 360° Panoramic View Modal */
+.panoramic-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  transition: opacity 0.3s ease;
+}
+
+.panoramic-modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 900px;
+  max-height: 80%;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: #b20404;
+  color: white;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: background 0.3s ease;
+}
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.modal-body {
+  padding: 0;
+}
+
+.panoramic-frame {
+  width: 100%;
+  height: 500px;
+  position: relative;
+}
+
+.panoramic-frame iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
 }
 
 /* Interactive Map */
@@ -646,6 +745,82 @@ body {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
+.audio-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.audio-selectors {
+  display: flex;
+  gap: 2rem;
+  flex: 1;
+  align-items: end;
+}
+
+.monastery-selector,
+.audio-language-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 200px;
+}
+
+.monastery-selector label,
+.audio-language-selector label {
+  font-weight: 600;
+  color: #f6efef;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.monastery-selector label i,
+.audio-language-selector label i {
+  color: #b20404;
+  font-size: 1rem;
+}
+
+.monastery-selector select,
+.audio-language-selector select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.monastery-selector select:focus,
+.audio-language-selector select:focus {
+  outline: none;
+  border-color: #b20404;
+  box-shadow: 0 0 0 3px rgba(178, 4, 4, 0.1);
+}
+
+/* Language selector styling */
+#audioLanguageSelect {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 500;
+}
+
+#audioLanguageSelect option {
+  padding: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.download-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
 .location-status {
   display: flex;
   justify-content: space-between;
@@ -853,6 +1028,21 @@ body {
   .monastery-meta {
     flex-direction: column;
     gap: 0.5rem;
+  }
+  
+  /* Mobile monastery info layout */
+  .monastery-info-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .monastery-photo {
+    flex: none;
+    width: 100%;
+  }
+  
+  .monastery-image {
+    height: 200px;
   }
   
   .player-info {
@@ -1087,4 +1277,416 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .entry-emphasis { transition: none; }
+}
+
+/* Enhanced Audio Guide Chapter Styles */
+.audio-chapters {
+  margin-top: 2rem;
+}
+
+.audio-chapters h4 {
+  color: #f6efef;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.chapters-subtitle {
+  color: #fbf9f9;
+  opacity: 0.8;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.chapter-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.chapter-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-left: 4px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.chapter-item:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(5px);
+  border-left-color: #b20404;
+  box-shadow: 0 4px 15px rgba(178, 4, 4, 0.2);
+}
+
+.chapter-item.active {
+  background: rgba(178, 4, 4, 0.2);
+  border-left-color: #b20404;
+  box-shadow: 0 4px 20px rgba(178, 4, 4, 0.3);
+}
+
+.chapter-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  background: #b20404;
+  animation: chapterProgress 0.3s ease;
+}
+
+@keyframes chapterProgress {
+  from {
+    height: 0;
+  }
+  to {
+    height: 100%;
+  }
+}
+
+.chapter-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  background: rgba(178, 4, 4, 0.8);
+  color: white;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 0.9rem;
+  margin-right: 1rem;
+  transition: all 0.3s ease;
+}
+
+.chapter-item.active .chapter-number {
+  background: #b20404;
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(178, 4, 4, 0.4);
+}
+
+.chapter-content {
+  flex: 1;
+  margin-right: 1rem;
+}
+
+.chapter-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.chapter-title i {
+  color: #b20404;
+  font-size: 1rem;
+}
+
+.chapter-title span {
+  color: #f6efef;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.chapter-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.chapter-time {
+  color: #b20404;
+  font-weight: 600;
+  font-size: 0.9rem;
+  background: rgba(178, 4, 4, 0.1);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.chapter-description {
+  color: #fbf9f9;
+  opacity: 0.8;
+  font-size: 0.85rem;
+  line-height: 1.3;
+}
+
+.chapter-duration {
+  color: #fbf9f9;
+  opacity: 0.7;
+  font-size: 0.9rem;
+  min-width: 50px;
+  text-align: right;
+  margin-right: 0.5rem;
+}
+
+.chapter-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  transition: all 0.3s ease;
+}
+
+.chapter-status i {
+  font-size: 1.2rem;
+  color: #b20404;
+  transition: all 0.3s ease;
+}
+
+.chapter-item:hover .chapter-status i {
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.chapter-item.active .chapter-status i {
+  color: #b20404;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* Enhanced Progress Container */
+.progress-container {
+  margin: 1rem 0;
+}
+
+#progressBarContainer {
+  position: relative;
+  background: #ddd;
+  height: 6px;
+  border-radius: 3px;
+  margin: 1rem 0;
+  overflow: visible;
+}
+
+.audio-seek {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.audio-seek::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #b20404;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(178, 4, 4, 0.3);
+  transition: all 0.2s ease;
+}
+
+.audio-seek::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: #b20404;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 4px rgba(178, 4, 4, 0.3);
+}
+
+.audio-seek:hover::-webkit-slider-thumb {
+  transform: scale(1.2);
+  box-shadow: 0 3px 8px rgba(178, 4, 4, 0.5);
+}
+
+/* Enhanced Player Controls */
+.player-controls {
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.player-controls button {
+  background: none;
+  border: none;
+  color: #b20404;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.player-controls button:hover {
+  color: #8b0303;
+  transform: scale(1.1);
+  background: rgba(178, 4, 4, 0.1);
+}
+
+.player-controls button i {
+  font-size: 1.5rem;
+}
+
+.play-btn {
+  background: #b20404 !important;
+  color: white !important;
+  width: 60px;
+  height: 60px;
+  box-shadow: 0 4px 15px rgba(178, 4, 4, 0.3);
+}
+
+.play-btn:hover {
+  background: #8b0303 !important;
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(178, 4, 4, 0.4);
+}
+
+.play-btn i {
+  font-size: 1.8rem !important;
+}
+
+/* Enhanced Track Info */
+.track-info {
+  flex: 1;
+  text-align: left;
+}
+
+.track-info h4 {
+  color: #000;
+  margin-bottom: 0.25rem;
+  font-size: 1.1rem;
+}
+
+.track-info p {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.monastery-meta {
+  margin-top: 0.5rem;
+}
+
+.monastery-meta span {
+  color: #b20404;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* Mobile Responsive Chapters */
+@media (max-width: 768px) {
+  .chapter-item {
+    padding: 0.75rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  
+  .chapter-number {
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
+    margin-right: 0;
+    align-self: flex-start;
+  }
+  
+  .chapter-content {
+    margin-right: 0;
+    width: 100%;
+  }
+  
+  .chapter-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .chapter-time {
+    font-size: 0.8rem;
+  }
+  
+  .chapter-description {
+    font-size: 0.8rem;
+  }
+  
+  .chapter-duration {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    margin: 0;
+    font-size: 0.8rem;
+  }
+  
+  .chapter-status {
+    position: absolute;
+    bottom: 0.75rem;
+    right: 0.75rem;
+    width: 25px;
+    height: 25px;
+  }
+  
+  .chapter-status i {
+    font-size: 1rem;
+  }
+  
+  .audio-controls {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .player-controls {
+    gap: 1rem;
+  }
+  
+  .play-btn {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .play-btn i {
+    font-size: 1.5rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .chapter-item {
+    padding: 0.5rem;
+  }
+  
+  .chapters-subtitle {
+    font-size: 0.8rem;
+  }
+  
+  .chapter-title span {
+    font-size: 0.9rem;
+  }
+  
+  .chapter-description {
+    display: none;
+  }
+  
+  .audio-chapters h4 {
+    font-size: 1rem;
+  }
 }
