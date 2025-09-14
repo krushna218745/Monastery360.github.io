@@ -228,16 +228,81 @@ body {
 .hero {
   text-align: center;
   padding: 4rem 2rem;
-  background: rgba(1, 0, 0, 0.5);
+  background: linear-gradient(135deg, 
+    rgba(25, 25, 35, 0.9) 0%,      /* Deep blue-gray */
+    rgba(35, 35, 50, 0.8) 50%,     /* Slightly lighter */
+    rgba(20, 20, 30, 0.95) 100%    /* Very dark blue-gray */
+  );
   border-radius: 15px;
   margin: 2rem 0;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 200%;
+  background-image: 
+    radial-gradient(4px 4px at 15px 25px, #ffffff, transparent),
+    radial-gradient(3px 3px at 35px 60px, rgba(255, 255, 255, 0.9), transparent),
+    radial-gradient(2px 2px at 65px 35px, #ffffff, transparent),
+    radial-gradient(3px 3px at 85px 70px, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(2px 2px at 110px 20px, #ffffff, transparent),
+    radial-gradient(4px 4px at 135px 55px, rgba(255, 255, 255, 0.9), transparent),
+    radial-gradient(1px 1px at 155px 80px, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(3px 3px at 175px 15px, #ffffff, transparent),
+    radial-gradient(2px 2px at 195px 45px, rgba(255, 255, 255, 0.8), transparent);
+  background-repeat: repeat;
+  background-size: 120px 120px;
+  animation: snowfall 10s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 200%;
+  background-image: 
+    radial-gradient(2px 2px at 10px 40px, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(1px 1px at 30px 75px, #ffffff, transparent),
+    radial-gradient(3px 3px at 50px 20px, rgba(255, 255, 255, 0.6), transparent),
+    radial-gradient(2px 2px at 70px 90px, rgba(255, 255, 255, 0.9), transparent),
+    radial-gradient(1px 1px at 95px 50px, #ffffff, transparent),
+    radial-gradient(2px 2px at 115px 10px, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(3px 3px at 140px 85px, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 165px 30px, #ffffff, transparent),
+    radial-gradient(2px 2px at 185px 65px, rgba(255, 255, 255, 0.7), transparent);
+  background-repeat: repeat;
+  background-size: 120px 120px;
+  animation: snowfall 14s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes snowfall {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
 }
 
 .hero h1 {
   font-size: 3rem;
   margin-bottom: 1rem;
   color: #f6efef;
+  position: relative;
+  z-index: 2;
 }
 
 .hero p {
@@ -245,6 +310,8 @@ body {
   color: #fbf9f9;
   opacity: 0.9;
   margin-bottom: 2rem;
+  position: relative;
+  z-index: 2;
 }
 
 .hero-stats {
@@ -252,6 +319,8 @@ body {
   justify-content: center;
   gap: 3rem;
   margin-top: 2rem;
+  position: relative;
+  z-index: 2;
 }
 
 .stat {
