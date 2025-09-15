@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Monastery360 - Digital Heritage Platform for Sikkim's Monasteries </title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/pannellum/build/pannellum.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum/build/pannellum.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum/build/pannellum.css" />
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+
 <body>
   <div id="entry-emphasis" class="entry-emphasis is-hidden" role="dialog" aria-label="Welcome" aria-live="polite">
     <div class="entry-content"></div>
@@ -22,14 +24,14 @@
         <i class="fas fa-dharmachakra"></i>
         <span>Monastery360</span>
       </div>
-      
+
       <!-- Hamburger Menu Button -->
       <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu">
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
       </button>
-      
+
       <div class="nav-menu" id="nav-menu">
         <a href="#home" class="nav-link active" data-section="home">Home</a>
         <a href="#tours" class="nav-link" data-section="tours">Virtual Tours</a>
@@ -38,7 +40,7 @@
         <a href="#calendar" class="nav-link" data-section="calendar">Cultural Calendar</a>
         <a href="#audio" class="nav-link" data-section="audio">Audio Guide</a>
       </div>
-      
+
       <div class="nav-actions">
         <div class="language-selector">
           <select id="languageSelect">
@@ -74,11 +76,11 @@
 
   <!-- Main Content -->
   <main class="main-content">
-    
+
     <!-- Home Section -->
     <section id="home-section" class="content-section active">
       <div class="hero reveal">
-        <h1>Discover Sikkim's Sacred Heritage</h1>
+        <h1>Discover <span id="typewriter" class="typewriter-text">Monastery360</span></h1>
         <p>Explore over 200 monasteries through immersive virtual tours, interactive maps, and rich digital archives</p>
         <div class="hero-stats">
           <div class="stat reveal-delay-1">
@@ -103,29 +105,142 @@
         <h2><i class="fas fa-vr-cardboard"></i> Virtual Tours</h2>
         <p>Experience 360° panoramic views with narrated walkthroughs</p>
       </div>
-      
-      <div class="tour-controls reveal-left">
-        <div class="monastery-selector">
-          <select id="monasterySelect">
-            <option value="dubdi">Dubdi Monastery</option>
-            <option value="enchey">Enchey Monastery</option>
-            <option value="rumtek">Rumtek Monastery</option>
-            <option value="pemayangtse">Pemayangtse Monastery</option>
-            <option value="phodong">Phodong Monastery</option>
-          </select>
+
+      <!-- Horizontal Monastery Carousel -->
+      <div class="monastery-carousel-container reveal-left">
+        <div class="carousel-header">
+          <h3>Explore Our Monasteries</h3>
+          <p>Click on any monastery to learn more about its history and significance</p>
         </div>
-        <div class="tour-options">
-          <button id="audioToggle" class="btn-secondary">
-            <i class="fas fa-volume-up"></i> Audio Guide
-          </button>
-          <button id="panoramicToggle" class="btn-secondary">
-            <i class="fas fa-globe"></i> 360° Panoramic Views
-          </button>
+
+        <div class="monastery-carousel" id="monasteryCarousel">
+          <div class="monastery-carousel-track">
+            <!-- Original cards -->
+            <div class="monastery-card active" data-monastery="dubdi">
+              <img src="assets/Dubdi.webp" alt="Dubdi Monastery">
+              <div class="card-info">
+                <h4>Dubdi Monastery</h4>
+                <p>Oldest monastery in Sikkim (1701)</p>
+                <button class="explore-btn" data-monastery="dubdi">
+                  <i class="fas fa-compass"></i> Explore
+                </button>
+              </div>
+            </div>
+
+            <div class="monastery-card" data-monastery="enchey">
+              <img src="assets/Enchey.webp" alt="Enchey Monastery">
+              <div class="card-info">
+                <h4>Enchey Monastery</h4>
+                <p>Peaceful retreat near Gangtok (1840)</p>
+                <button class="explore-btn" data-monastery="enchey">
+                  <i class="fas fa-compass"></i> Explore
+                </button>
+              </div>
+            </div>
+
+            <div class="monastery-card" data-monastery="rumtek">
+              <img src="assets/Rumtek.webp" alt="Rumtek Monastery">
+              <div class="card-info">
+                <h4>Rumtek Monastery</h4>
+                <p>Seat of the Karmapa (1966)</p>
+                <button class="explore-btn" data-monastery="rumtek">
+                  <i class="fas fa-compass"></i> Explore
+                </button>
+              </div>
+            </div>
+
+            <div class="monastery-card" data-monastery="pemayangtse">
+              <img src="assets/Pemayangtse.webp" alt="Pemayangtse Monastery">
+              <div class="card-info">
+                <h4>Pemayangtse Monastery</h4>
+                <p>Perfect Sublime Lotus (1705)</p>
+                <button class="explore-btn" data-monastery="pemayangtse">
+                  <i class="fas fa-compass"></i> Explore
+                </button>
+              </div>
+            </div>
+
+            <div class="monastery-card" data-monastery="phodong">
+              <img src="assets/Phodong.webp" alt="Phodong Monastery">
+              <div class="card-info">
+                <h4>Phodong Monastery</h4>
+                <p>Hilltop monastery with views (1721)</p>
+                <button class="explore-btn" data-monastery="phodong">
+                  <i class="fas fa-compass"></i> Explore
+                </button>
+              </div>
+            </div>
+
+            <!-- Duplicate cards for seamless loop -->
+            <div class="monastery-card" data-monastery="dubdi">
+              <img src="assets/Dubdi.webp" alt="Dubdi Monastery">
+              <div class="card-info">
+                <h4>Dubdi Monastery</h4>
+                <p>Oldest monastery in Sikkim (1701)</p>
+                <button class="explore-btn" data-monastery="dubdi">
+                  <i class="fas fa-compass"></i> Explore
+                </button>
+              </div>
+            </div>
+
+            <div class="monastery-card" data-monastery="enchey">
+              <img src="assets/Enchey.webp" alt="Enchey Monastery">
+              <div class="card-info">
+                <h4>Enchey Monastery</h4>
+                <p>Peaceful retreat near Gangtok (1840)</p>
+                <button class="explore-btn" data-monastery="enchey">
+                  <i class="fas fa-compass"></i> Explore
+                </button>
+              </div>
+            </div>
+
+            <div class="monastery-card" data-monastery="rumtek">
+              <img src="assets/Rumtek.webp" alt="Rumtek Monastery">
+              <div class="card-info">
+                <h4>Rumtek Monastery</h4>
+                <p>Seat of the Karmapa (1966)</p>
+                <button class="explore-btn" data-monastery="rumtek">
+                  <i class="fas fa-compass"></i> Explore
+                </button>
+              </div>
+            </div>
+
+            <div class="monastery-card" data-monastery="pemayangtse">
+              <img src="assets/Pemayangtse.webp" alt="Pemayangtse Monastery">
+              <div class="card-info">
+                <h4>Pemayangtse Monastery</h4>
+                <p>Perfect Sublime Lotus (1705)</p>
+                <button class="explore-btn" data-monastery="pemayangtse">
+                  <i class="fas fa-compass"></i> Explore
+                </button>
+              </div>
+            </div>
+
+            <div class="monastery-card" data-monastery="phodong">
+              <img src="assets/Phodong.webp" alt="Phodong Monastery">
+              <div class="card-info">
+                <h4>Phodong Monastery</h4>
+                <p>Hilltop monastery with views (1721)</p>
+                <button class="explore-btn" data-monastery="phodong">
+                  <i class="fas fa-compass"></i> Explore
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
+      <div class="tour-options reveal-right">
+        <button id="audioToggle" class="btn-secondary">
+          <i class="fas fa-volume-up"></i> Audio Guide
+        </button>
+        <button id="panoramicToggle" class="btn-secondary">
+          <i class="fas fa-globe"></i> 360° Panoramic Views
+        </button>
+      </div>
+
       <div id="viewer" class="panorama-viewer reveal-scale"></div>
-      
+
       <div class="tour-info reveal">
         <div class="monastery-info-container">
           <div class="monastery-photo">
@@ -133,7 +248,11 @@
           </div>
           <div id="monasteryInfo" class="monastery-details">
             <h3>Dubdi Monastery</h3>
-            <p>Dubdi Monastery, established in 1701, is the oldest monastery in Sikkim and a vital center of Nyingma Buddhism. Nestled near Yuksom, it stands as a serene spiritual retreat with beautifully preserved traditional architecture. Recognized as a national monument, Dubdi offers visitors a glimpse into Sikkim's rich religious heritage and monastic traditions. Its tranquil surroundings and historical significance make it a must-visit for those interested in culture, spirituality, and history.</p>
+            <p>Dubdi Monastery, established in 1701, is the oldest monastery in Sikkim and a vital center of Nyingma
+              Buddhism. Nestled near Yuksom, it stands as a serene spiritual retreat with beautifully preserved
+              traditional architecture. Recognized as a national monument, Dubdi offers visitors a glimpse into Sikkim's
+              rich religious heritage and monastic traditions. Its tranquil surroundings and historical significance
+              make it a must-visit for those interested in culture, spirituality, and history.</p>
             <div class="monastery-meta">
               <span><i class="fas fa-calendar"></i> Founded: 1701</span>
               <span><i class="fas fa-users"></i> Sect: Nyingma</span>
@@ -167,7 +286,7 @@
         <h2><i class="fas fa-map-marked-alt"></i> Interactive Map</h2>
         <p>Explore monastery locations with travel routes and nearby attractions</p>
       </div>
-      
+
       <div class="map-controls reveal-left">
         <div class="filter-options">
           <button class="filter-btn active" data-filter="all">All Monasteries</button>
@@ -186,7 +305,7 @@
       </div>
 
       <div id="map" class="interactive-map reveal-scale"></div>
-      
+
       <div class="map-legend">
         <div class="legend-item">
           <span class="legend-icon kagyu"></span>
@@ -209,7 +328,7 @@
         <h2><i class="fas fa-archive"></i> Digital Archives</h2>
         <p>Explore scanned manuscripts, murals, and historical documents</p>
       </div>
-      
+
       <div class="archive-search">
         <div class="search-bar">
           <input type="text" id="archiveSearch" placeholder="Search manuscripts, murals, documents...">
@@ -260,14 +379,14 @@
         <h2><i class="fas fa-calendar-alt"></i> Cultural Calendar</h2>
         <p>Discover upcoming festivals, events, and rituals</p>
       </div>
-      
+
       <div class="calendar-container reveal-scale">
         <div class="calendar-header">
           <button id="prevMonth" class="calendar-nav"><i class="fas fa-chevron-left"></i></button>
           <h3 id="currentMonth">December 2024</h3>
           <button id="nextMonth" class="calendar-nav"><i class="fas fa-chevron-right"></i></button>
         </div>
-        
+
         <div class="calendar-grid">
           <div class="calendar-day header">Sun</div>
           <div class="calendar-day header">Mon</div>
@@ -354,7 +473,7 @@
         <h2><i class="fas fa-headphones"></i> Smart Audio Guide</h2>
         <p>Location-based audio guides with offline mode for remote areas</p>
       </div>
-      
+
       <div class="audio-guide-container">
         <div class="audio-controls">
           <div class="audio-selectors">
@@ -368,7 +487,7 @@
                 <option value="phodong">Phodong Monastery</option>
               </select>
             </div>
-            
+
             <div class="audio-language-selector">
               <label for="audioLanguageSelect"><i class="fas fa-globe"></i> Language:</label>
               <select id="audioLanguageSelect">
@@ -378,7 +497,7 @@
               </select>
             </div>
           </div>
-          
+
           <div class="download-controls">
             <button id="offlineMode" class="btn-secondary">
               <i class="fas fa-download"></i> Download Offline Content
@@ -400,14 +519,14 @@
               </div>
             </div>
           </div>
-          
+
           <div class="player-controls">
             <button id="prevChapter" title="Previous Chapter"><i class="fas fa-step-backward"></i></button>
             <button id="playPause" class="play-btn" title="Play/Pause"><i class="fas fa-play"></i></button>
             <button id="nextChapter" title="Next Chapter"><i class="fas fa-step-forward"></i></button>
             <button id="volumeToggle" title="Mute/Unmute"><i class="fas fa-volume-up"></i></button>
           </div>
-          
+
           <div class="progress-container">
             <div class="progress-bar" id="progressBarContainer">
               <div class="progress" id="audioProgress"></div>
@@ -439,7 +558,8 @@
                 </div>
                 <div class="chapter-meta">
                   <span class="chapter-time" id="chapter-time-0">0:00</span>
-                  <span class="chapter-description">Learn about the monastery's founding and historical significance</span>
+                  <span class="chapter-description">Learn about the monastery's founding and historical
+                    significance</span>
                 </div>
               </div>
               <div class="chapter-duration">~3 min</div>
@@ -447,7 +567,7 @@
                 <i class="fas fa-play-circle"></i>
               </div>
             </div>
-            
+
             <div class="chapter-item" data-chapter="architecture" data-start-time="180" data-end-time="360">
               <div class="chapter-number">02</div>
               <div class="chapter-content">
@@ -457,7 +577,8 @@
                 </div>
                 <div class="chapter-meta">
                   <span class="chapter-time" id="chapter-time-1">3:00</span>
-                  <span class="chapter-description">Explore the unique architectural features and artistic elements</span>
+                  <span class="chapter-description">Explore the unique architectural features and artistic
+                    elements</span>
                 </div>
               </div>
               <div class="chapter-duration">~2 min</div>
@@ -465,7 +586,7 @@
                 <i class="fas fa-play-circle"></i>
               </div>
             </div>
-            
+
             <div class="chapter-item" data-chapter="rituals" data-start-time="360" data-end-time="540">
               <div class="chapter-number">03</div>
               <div class="chapter-content">
@@ -492,4 +613,5 @@
 
   <script src="script.js"></script>
 </body>
+
 </html>
