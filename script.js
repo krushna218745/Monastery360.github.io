@@ -1,6 +1,50 @@
 // Monastery360 - Digital Heritage Platform
 // Interactive functionality for Sikkim's monasteries
 
+// Typewriter Effect
+class TypewriterEffect {
+  constructor(element, words, typeSpeed = 100, deleteSpeed = 50, delayBetweenWords = 2000) {
+    this.element = element;
+    this.words = words;
+    this.typeSpeed = typeSpeed;
+    this.deleteSpeed = deleteSpeed;
+    this.delayBetweenWords = delayBetweenWords;
+    this.currentWordIndex = 0;
+    this.currentText = '';
+    this.isDeleting = false;
+    this.start();
+  }
+
+  start() {
+    this.type();
+  }
+
+  type() {
+    const currentWord = this.words[this.currentWordIndex];
+    
+    if (this.isDeleting) {
+      this.currentText = currentWord.substring(0, this.currentText.length - 1);
+    } else {
+      this.currentText = currentWord.substring(0, this.currentText.length + 1);
+    }
+
+    this.element.textContent = this.currentText;
+
+    let typeSpeed = this.isDeleting ? this.deleteSpeed : this.typeSpeed;
+
+    if (!this.isDeleting && this.currentText === currentWord) {
+      typeSpeed = this.delayBetweenWords;
+      this.isDeleting = true;
+    } else if (this.isDeleting && this.currentText === '') {
+      this.isDeleting = false;
+      this.currentWordIndex = (this.currentWordIndex + 1) % this.words.length;
+      typeSpeed = 500;
+    }
+
+    setTimeout(() => this.type(), typeSpeed);
+  }
+}
+
 // Global variables
 let map;
 let panoramaViewer;
@@ -1969,3 +2013,199 @@ window.loadMonasteryTour = loadMonasteryTour;
   // In case the image takes time to load, ensure it's visible immediately
   requestAnimationFrame(() => overlay.classList.remove('is-hidden'));
 })();
+
+// Monastery Carousel Functionality with Explore Buttons
+class MonasteryCarousel {
+  constructor() {
+    this.carousel = document.getElementById('monasteryCarousel');
+    this.track = document.querySelector('.monastery-carousel-track');
+    this.exploreButtons = document.querySelectorAll('.explore-btn');
+    
+    this.init();
+  }
+
+  init() {
+    if (!this.carousel || !this.track) return;
+    
+    // Add click listeners to explore buttons
+    this.exploreButtons.forEach((button) => {
+      button.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent card click
+        const monasteryId = button.dataset.monastery;
+        this.exploreMonastery(monasteryId);
+      });
+    });
+    
+    // Pause animation on hover
+    this.track.addEventListener('mouseenter', () => {
+      this.track.style.animationPlayState = 'paused';
+    });
+    
+    this.track.addEventListener('mouseleave', () => {
+      this.track.style.animationPlayState = 'running';
+    });
+  }
+
+  exploreMonastery(monasteryId) {
+    // Find the clicked card and add zoom out animation
+    const clickedCard = event.target.closest('.monastery-card');
+    if (clickedCard) {
+      clickedCard.classList.add('exploring');
+      
+      // Remove animation class after animation completes
+      setTimeout(() => {
+        clickedCard.classList.remove('exploring');
+      }, 600);
+    }
+    
+    // Show monastery details modal with slight delay for animation
+    setTimeout(() => {
+      this.showMonasteryDetails(monasteryId);
+    }, 200);
+    
+    console.log(`Exploring monastery: ${monasteryId}`);
+  }
+
+  showMonasteryDetails(monasteryId) {
+    // Create and show monastery details modal
+    const modal = this.createMonasteryModal(monasteryId);
+    document.body.appendChild(modal);
+    
+    // Show modal with animation
+    setTimeout(() => {
+      modal.classList.add('show');
+    }, 10);
+  }
+
+  createMonasteryModal(monasteryId) {
+    const monasteryData = this.getMonasteryData(monasteryId);
+    
+    const modal = document.createElement('div');
+    modal.className = 'monastery-modal';
+    modal.innerHTML = `
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <button class="modal-close">&times;</button>
+        <div class="modal-header">
+          <img src="${monasteryData.image}" alt="${monasteryData.name}">
+          <div class="modal-title">
+            <h2>${monasteryData.name}</h2>
+            <span class="sect-badge ${monasteryData.sect.toLowerCase()}">${monasteryData.sect}</span>
+          </div>
+        </div>
+        <div class="modal-body">
+          <div class="monastery-details">
+            <div class="detail-item">
+              <i class="fas fa-calendar"></i>
+              <span>Founded: ${monasteryData.founded}</span>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-mountain"></i>
+              <span>Altitude: ${monasteryData.altitude}</span>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Location: ${monasteryData.location}</span>
+            </div>
+          </div>
+          <p class="monastery-description">${monasteryData.description}</p>
+          <div class="modal-actions">
+            <button class="btn-primary" onclick="this.closest('.monastery-modal').remove()">
+              <i class="fas fa-vr-cardboard"></i> Start Virtual Tour
+            </button>
+            <button class="btn-secondary" onclick="this.closest('.monastery-modal').remove()">
+              <i class="fas fa-headphones"></i> Audio Guide
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+    
+    // Add close functionality
+    modal.querySelector('.modal-close').addEventListener('click', () => {
+      modal.classList.remove('show');
+      setTimeout(() => modal.remove(), 300);
+    });
+    
+    modal.querySelector('.modal-overlay').addEventListener('click', () => {
+      modal.classList.remove('show');
+      setTimeout(() => modal.remove(), 300);
+    });
+    
+    return modal;
+  }
+
+  getMonasteryData(monasteryId) {
+    const monasteries = {
+      dubdi: {
+        name: 'Dubdi Monastery',
+        sect: 'Nyingma',
+        founded: '1701',
+        altitude: '2,100m',
+        location: 'Near Yuksom, West Sikkim',
+        image: 'assets/Dubdi.webp',
+        description: 'Dubdi Monastery, established in 1701, is the oldest monastery in Sikkim and a vital center of Nyingma Buddhism. Nestled near Yuksom, it stands as a serene spiritual retreat with beautifully preserved traditional architecture.'
+      },
+      enchey: {
+        name: 'Enchey Monastery',
+        sect: 'Nyingma',
+        founded: '1840',
+        altitude: '1,575m',
+        location: 'Northeast of Gangtok',
+        image: 'assets/Enchey.webp',
+        description: 'Enchey Monastery, perched northeast of Gangtok, is a revered spiritual center of the Nyingma sect of Vajrayana Buddhism. Founded in 1840 by Lama Drupthob Karpo, the monastery offers a peaceful retreat surrounded by lush forests.'
+      },
+      rumtek: {
+        name: 'Rumtek Monastery',
+        sect: 'Kagyu',
+        founded: '1966',
+        altitude: '1,550m',
+        location: '23 km from Gangtok',
+        image: 'assets/Rumtek.webp',
+        description: 'Rumtek Monastery is the principal seat of the 16th Gyalwa Karmapa of the Karma Kagyu lineage. Modeled as a replica of Tibet\'s Tsurpu Monastery, it showcases exquisite murals, intricate thankas, and a revered statue of Sakyamuni Buddha.'
+      },
+      pemayangtse: {
+        name: 'Pemayangtse Monastery',
+        sect: 'Nyingma',
+        founded: '1705',
+        altitude: '2,085m',
+        location: 'Pelling, West Sikkim',
+        image: 'assets/Pemayangtse.webp',
+        description: 'Pemayangtse Monastery, meaning "Perfect Sublime Lotus," is one of the oldest and most important monasteries in Sikkim. Built in 1705, it offers stunning views of the Kanchenjunga range and houses ancient Buddhist artifacts.'
+      },
+      phodong: {
+        name: 'Phodong Monastery',
+        sect: 'Kagyu',
+        founded: '1721',
+        altitude: '1,500m',
+        location: 'North Sikkim',
+        image: 'assets/Phodong.webp',
+        description: 'Phodong Monastery, established in 1721, is a beautiful hilltop monastery offering panoramic views of the surrounding valleys. It serves as an important center for Kagyu Buddhist practices and meditation retreats.'
+      }
+    };
+    
+    return monasteries[monasteryId] || monasteries.dubdi;
+  }
+}
+
+// Initialize Typewriter Effect and Carousel
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize Typewriter Effect
+  const typewriterElement = document.getElementById('typewriter');
+  if (typewriterElement) {
+    const monasteryNames = [
+      'Monastery360',
+      'Rumtek Monastery',
+      'Pemayangtse Monastery', 
+      'Tashiding Monastery',
+      'Enchey Monastery',
+      'Dubdi Monastery',
+      'Sacred Heritage'
+    ];
+    
+    new TypewriterEffect(typewriterElement, monasteryNames, 120, 80, 2500);
+  }
+  
+  // Initialize Monastery Carousel
+  new MonasteryCarousel();
+});
