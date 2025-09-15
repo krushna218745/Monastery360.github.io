@@ -14,8 +14,9 @@ body {
   line-height: 1.6;
   color: #000;
   font-weight: 700;
-  background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), url('assets/new background.png') center/cover fixed no-repeat;
+  background: #000;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* Navigation */
@@ -58,8 +59,13 @@ body {
 }
 
 @keyframes dharma-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Hamburger Menu */
@@ -228,11 +234,14 @@ body {
 .hero {
   text-align: center;
   padding: 4rem 2rem;
-  background: linear-gradient(135deg, 
-    rgba(25, 25, 35, 0.9) 0%,      /* Deep blue-gray */
-    rgba(35, 35, 50, 0.8) 50%,     /* Slightly lighter */
-    rgba(20, 20, 30, 0.95) 100%    /* Very dark blue-gray */
-  );
+  background: linear-gradient(135deg,
+      rgba(25, 25, 35, 0.9) 0%,
+      /* Deep blue-gray */
+      rgba(35, 35, 50, 0.8) 50%,
+      /* Slightly lighter */
+      rgba(20, 20, 30, 0.95) 100%
+      /* Very dark blue-gray */
+    );
   border-radius: 15px;
   margin: 2rem 0;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -247,7 +256,7 @@ body {
   left: 0;
   width: 100%;
   height: 200%;
-  background-image: 
+  background-image:
     radial-gradient(4px 4px at 15px 25px, #ffffff, transparent),
     radial-gradient(3px 3px at 35px 60px, rgba(255, 255, 255, 0.9), transparent),
     radial-gradient(2px 2px at 65px 35px, #ffffff, transparent),
@@ -271,7 +280,7 @@ body {
   left: 0;
   width: 100%;
   height: 200%;
-  background-image: 
+  background-image:
     radial-gradient(2px 2px at 10px 40px, rgba(255, 255, 255, 0.7), transparent),
     radial-gradient(1px 1px at 30px 75px, #ffffff, transparent),
     radial-gradient(3px 3px at 50px 20px, rgba(255, 255, 255, 0.6), transparent),
@@ -292,6 +301,7 @@ body {
   0% {
     transform: translateY(-100%);
   }
+
   100% {
     transform: translateY(100%);
   }
@@ -303,6 +313,14 @@ body {
   color: #f6efef;
   position: relative;
   z-index: 2;
+}
+
+/* Typewriter Effect */
+.typewriter-text {
+  color: #b20404;
+  display: inline-block;
+  min-width: 300px;
+  text-align: left;
 }
 
 .hero p {
@@ -367,10 +385,253 @@ body {
 }
 
 /* Virtual Tours */
-.tour-controls {
+.monastery-carousel-container {
+  background: rgba(1, 0, 0, 0.5);
+  padding: 1.5rem;
+  border-radius: 15px;
+  margin-bottom: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1rem;
+}
+
+.carousel-header h3 {
+  color: #f6efef;
+  margin: 0;
+}
+
+.carousel-header p {
+  color: #fbf9f9;
+  opacity: 0.9;
+  margin: 0.5rem 0 0 0;
+  font-size: 0.95rem;
+}
+
+.monastery-carousel {
+  display: flex;
+  gap: 1rem;
+  overflow: hidden;
+  padding: 1rem 0;
+  position: relative;
+  width: 100%;
+}
+
+.monastery-carousel-track {
+  display: flex;
+  gap: 1rem;
+  animation: scroll-horizontal 25s linear infinite;
+  width: max-content;
+}
+
+@keyframes scroll-horizontal {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(calc(-296px * 5));
+    /* Move by width of 5 cards (280px + 16px gap) */
+  }
+}
+
+.monastery-carousel-track:hover {
+  animation-play-state: paused;
+}
+
+.monastery-carousel::-webkit-scrollbar {
+  height: 8px;
+}
+
+.monastery-carousel::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.monastery-carousel::-webkit-scrollbar-thumb {
+  background: #b20404;
+  border-radius: 4px;
+}
+
+.monastery-carousel::-webkit-scrollbar-thumb:hover {
+  background: #8b0303;
+}
+
+/* Hide scrollbars on mobile */
+@media (max-width: 768px) {
+
+  /* Hide carousel scrollbar */
+  .monastery-carousel {
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* Internet Explorer 10+ */
+  }
+
+  .monastery-carousel::-webkit-scrollbar {
+    display: none;
+    /* WebKit */
+  }
+
+  /* Hide main body scrollbar */
+  body {
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* Internet Explorer 10+ */
+  }
+
+  body::-webkit-scrollbar {
+    display: none;
+    /* WebKit */
+  }
+
+  /* Hide scrollbar for any overflow containers */
+  .content-section {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .content-section::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.monastery-card {
+  min-width: 280px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  transform: scale(1);
+}
+
+.monastery-card:hover {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  z-index: 10;
+}
+
+.monastery-card.active {
+  border: 3px solid #b20404;
+  transform: scale(1.02);
+}
+
+.monastery-card.active:hover {
+  transform: translateY(-8px) scale(1.07);
+}
+
+.monastery-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+  transform: scale(1);
+}
+
+.monastery-card:hover img {
+  transform: scale(1.15);
+}
+
+.card-info {
+  padding: 1rem;
+}
+
+.card-info h4 {
+  color: #000;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.card-info p {
+  color: #666;
+  margin: 0 0 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+.sect-badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: white;
+}
+
+.sect-badge.nyingma {
+  background: #3498db;
+}
+
+.sect-badge.kagyu {
+  background: #e74c3c;
+}
+
+.sect-badge.gelug {
+  background: #f39c12;
+}
+
+.explore-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background: linear-gradient(135deg, #b20404, #8b0303);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.9rem;
+  margin-top: 0.75rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.explore-btn:hover {
+  background: linear-gradient(135deg, #8b0303, #6b0202);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(178, 4, 4, 0.4);
+}
+
+.explore-btn:active {
+  transform: translateY(0) scale(1.05);
+  box-shadow: 0 2px 8px rgba(178, 4, 4, 0.3);
+}
+
+.monastery-card.exploring {
+  animation: zoom-in-explore 0.6s ease-out;
+}
+
+@keyframes zoom-in-explore {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.15);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.explore-btn i {
+  font-size: 1rem;
+}
+
+.tour-options {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
   margin-bottom: 1rem;
   background: rgba(1, 0, 0, 0.5);
   padding: 1rem;
@@ -601,9 +862,17 @@ body {
   border-radius: 50%;
 }
 
-.legend-icon.kagyu { background: #e74c3c; }
-.legend-icon.nyingma { background: #3498db; }
-.legend-icon.gelug { background: #f39c12; }
+.legend-icon.kagyu {
+  background: #e74c3c;
+}
+
+.legend-icon.nyingma {
+  background: #3498db;
+}
+
+.legend-icon.gelug {
+  background: #f39c12;
+}
 
 /* Digital Archives */
 .archive-search {
@@ -1014,22 +1283,23 @@ body {
   .nav-container {
     padding: 0 1rem;
   }
-  
+
   .nav-menu {
     gap: 1.5rem;
   }
-  
+
   .content-section {
     padding: 3rem 1.5rem;
   }
 }
 
 @media (max-width: 768px) {
+
   /* Mobile Navigation */
   .hamburger {
     display: flex;
   }
-  
+
   .nav-menu {
     position: fixed;
     top: 80px;
@@ -1047,11 +1317,11 @@ body {
     z-index: 999;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
   }
-  
+
   .nav-menu.active {
     left: 0;
   }
-  
+
   .nav-link {
     font-size: 1.2rem;
     padding: 1rem 2rem;
@@ -1060,117 +1330,117 @@ body {
     border-radius: 10px;
     transition: all 0.3s ease;
   }
-  
+
   .nav-link:hover {
     background: rgba(178, 4, 4, 0.1);
     transform: translateX(5px);
   }
-  
+
   .nav-actions {
     position: absolute;
     right: 60px;
     top: 50%;
     transform: translateY(-50%);
   }
-  
+
   .language-selector select {
     font-size: 0.9rem;
     padding: 0.4rem;
   }
-  
+
   /* Content adjustments */
   .hero h1 {
     font-size: 2rem;
   }
-  
+
   .hero-stats {
     flex-direction: column;
     gap: 1rem;
   }
-  
+
   .tour-controls,
   .map-controls {
     flex-direction: column;
     gap: 1rem;
   }
-  
+
   .monastery-meta {
     flex-direction: column;
     gap: 0.5rem;
   }
-  
+
   /* Mobile monastery info layout */
   .monastery-info-container {
     flex-direction: column;
     gap: 1rem;
   }
-  
+
   .monastery-photo {
     flex: none;
     width: 100%;
   }
-  
+
   .monastery-image {
     height: 200px;
   }
-  
+
   .player-info {
     flex-direction: column;
     text-align: center;
   }
-  
+
   /* Mobile progress indicator */
   .progress-indicator {
     right: 10px;
     transform: translateY(-50%) scale(0.8);
   }
-  
+
   .progress-bar-container {
     height: 150px;
   }
-  
+
   .dot {
     width: 10px;
     height: 10px;
   }
-  
+
   .scroll-to-top {
     bottom: 20px;
     right: 20px;
     width: 45px;
     height: 45px;
   }
-  
+
   .content-section {
     padding: 2rem 1rem;
   }
-  
+
   .section-header h2 {
     font-size: 2rem;
   }
-  
+
   /* Calendar mobile adjustments */
   .calendar-container {
     padding: 1rem;
     overflow-x: auto;
   }
-  
+
   .calendar-grid {
     min-width: 100%;
     width: 100%;
   }
-  
+
   .calendar-day {
     padding: 0.5rem;
     min-height: 50px;
     font-size: 0.9rem;
   }
-  
+
   .calendar-day.header {
     min-height: 35px;
     font-size: 0.8rem;
   }
-  
+
   .section-header p {
     font-size: 1rem;
   }
@@ -1180,55 +1450,55 @@ body {
   .nav-container {
     padding: 0 0.5rem;
   }
-  
+
   .nav-logo {
     font-size: 1.2rem;
   }
-  
+
   .nav-logo i {
     font-size: 1.5rem;
   }
-  
+
   .hero h1 {
     font-size: 1.8rem;
   }
-  
+
   .hero p {
     font-size: 1rem;
   }
-  
+
   .section-header h2 {
     font-size: 1.8rem;
   }
-  
+
   .content-section {
     padding: 1.5rem 0.5rem;
   }
-  
+
   .progress-indicator {
     right: 5px;
     transform: translateY(-50%) scale(0.7);
   }
-  
+
   .scroll-to-top {
     bottom: 15px;
     right: 15px;
     width: 40px;
     height: 40px;
   }
-  
+
   /* Extra small screen calendar adjustments */
   .calendar-container {
     padding: 0.5rem;
     margin: 0 -0.5rem;
   }
-  
+
   .calendar-day {
     padding: 0.25rem;
     min-height: 40px;
     font-size: 0.8rem;
   }
-  
+
   .calendar-day.header {
     min-height: 30px;
     font-size: 0.7rem;
@@ -1290,11 +1560,25 @@ body {
 }
 
 /* Staggered animations */
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-.reveal-delay-4 { transition-delay: 0.4s; }
-.reveal-delay-5 { transition-delay: 0.5s; }
+.reveal-delay-1 {
+  transition-delay: 0.1s;
+}
+
+.reveal-delay-2 {
+  transition-delay: 0.2s;
+}
+
+.reveal-delay-3 {
+  transition-delay: 0.3s;
+}
+
+.reveal-delay-4 {
+  transition-delay: 0.4s;
+}
+
+.reveal-delay-5 {
+  transition-delay: 0.5s;
+}
 
 /* Entry Emphasis Overlay */
 .entry-emphasis {
@@ -1319,8 +1603,8 @@ body {
   transition: transform 500ms ease;
   position: relative;
   /* Smooth edge fade of the image */
-  -webkit-mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 68%, rgba(0,0,0,0) 100%);
-  mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 68%, rgba(0,0,0,0) 100%);
+  -webkit-mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 1) 68%, rgba(0, 0, 0, 0) 100%);
+  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 1) 68%, rgba(0, 0, 0, 0) 100%);
   -webkit-mask-size: cover;
   mask-size: cover;
 }
@@ -1345,7 +1629,9 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .entry-emphasis { transition: none; }
+  .entry-emphasis {
+    transition: none;
+  }
 }
 
 /* Enhanced Audio Guide Chapter Styles */
@@ -1416,6 +1702,7 @@ body {
   from {
     height: 0;
   }
+
   to {
     height: 100%;
   }
@@ -1523,9 +1810,12 @@ body {
 }
 
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.6;
   }
@@ -1671,7 +1961,7 @@ body {
     align-items: flex-start;
     gap: 0.75rem;
   }
-  
+
   .chapter-number {
     width: 30px;
     height: 30px;
@@ -1679,26 +1969,26 @@ body {
     margin-right: 0;
     align-self: flex-start;
   }
-  
+
   .chapter-content {
     margin-right: 0;
     width: 100%;
   }
-  
+
   .chapter-meta {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
   }
-  
+
   .chapter-time {
     font-size: 0.8rem;
   }
-  
+
   .chapter-description {
     font-size: 0.8rem;
   }
-  
+
   .chapter-duration {
     position: absolute;
     top: 0.75rem;
@@ -1706,7 +1996,7 @@ body {
     margin: 0;
     font-size: 0.8rem;
   }
-  
+
   .chapter-status {
     position: absolute;
     bottom: 0.75rem;
@@ -1714,25 +2004,25 @@ body {
     width: 25px;
     height: 25px;
   }
-  
+
   .chapter-status i {
     font-size: 1rem;
   }
-  
+
   .audio-controls {
     flex-direction: column;
     gap: 1rem;
   }
-  
+
   .player-controls {
     gap: 1rem;
   }
-  
+
   .play-btn {
     width: 50px;
     height: 50px;
   }
-  
+
   .play-btn i {
     font-size: 1.5rem !important;
   }
@@ -1742,20 +2032,278 @@ body {
   .chapter-item {
     padding: 0.5rem;
   }
-  
+
   .chapters-subtitle {
     font-size: 0.8rem;
   }
-  
+
   .chapter-title span {
     font-size: 0.9rem;
   }
-  
+
   .chapter-description {
     display: none;
   }
-  
+
   .audio-chapters h4 {
     font-size: 1rem;
+  }
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .typewriter-text {
+    min-width: 200px;
+    font-size: 0.9em;
+  }
+
+  .monastery-carousel-container {
+    padding: 1rem;
+  }
+
+  .carousel-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .monastery-card {
+    min-width: 240px;
+  }
+
+  .monastery-card img {
+    height: 150px;
+  }
+
+  .monastery-carousel-track {
+    animation: scroll-horizontal-tablet 22s linear infinite;
+  }
+
+  @keyframes scroll-horizontal-tablet {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(calc(-256px * 5));
+      /* 240px + 16px gap */
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .typewriter-text {
+    min-width: 150px;
+    font-size: 0.8em;
+  }
+
+  .monastery-carousel-container {
+    padding: 0.5rem;
+    margin: 0 -0.5rem 1rem -0.5rem;
+  }
+
+  .monastery-card {
+    min-width: 200px;
+  }
+
+  .monastery-card img {
+    height: 120px;
+  }
+
+  .card-info {
+    padding: 0.75rem;
+  }
+
+  .card-info h4 {
+    font-size: 1rem;
+  }
+
+  .carousel-btn {
+    width: 35px;
+    height: 35px;
+  }
+
+  .monastery-carousel-track {
+    animation: scroll-horizontal-mobile 20s linear infinite;
+  }
+
+  @keyframes scroll-horizontal-mobile {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(calc(-216px * 5));
+      /* 200px + 16px gap */
+    }
+  }
+}
+
+/* Monaste
+ry Modal Styles */
+.monastery-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.monastery-modal.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 15px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #666;
+  z-index: 1;
+  transition: color 0.3s ease;
+}
+
+.modal-close:hover {
+  color: #b20404;
+}
+
+.modal-header {
+  position: relative;
+}
+
+.modal-header img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 15px 15px 0 0;
+}
+
+.modal-title {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.modal-title h2 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.8rem;
+}
+
+.modal-body {
+  padding: 2rem;
+}
+
+.monastery-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.detail-item i {
+  color: #b20404;
+  width: 16px;
+}
+
+.monastery-description {
+  line-height: 1.6;
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.btn-primary {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #b20404, #8b0303);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #8b0303, #6b0202);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(178, 4, 4, 0.4);
+}
+
+/* Mobile Modal Styles */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    max-height: 85vh;
+  }
+
+  .modal-header img {
+    height: 200px;
+  }
+
+  .modal-title h2 {
+    font-size: 1.5rem;
+  }
+
+  .modal-body {
+    padding: 1.5rem;
+  }
+
+  .monastery-details {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .modal-actions {
+    flex-direction: column;
   }
 }
