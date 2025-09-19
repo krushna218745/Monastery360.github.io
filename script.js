@@ -2170,7 +2170,7 @@ class MonasteryCarousel {
         founded: '1705',
         altitude: '2,085m',
         location: 'Pelling, West Sikkim',
-        image: 'assets/Pemayangtse.webp',
+        image: 'assets/Pemayangtse.jpeg',
         description: 'Pemayangtse Monastery, meaning "Perfect Sublime Lotus," is one of the oldest and most important monasteries in Sikkim. Built in 1705, it offers stunning views of the Kanchenjunga range and houses ancient Buddhist artifacts.'
       },
       phodong: {
@@ -2179,7 +2179,7 @@ class MonasteryCarousel {
         founded: '1721',
         altitude: '1,500m',
         location: 'North Sikkim',
-        image: 'assets/Phodong.webp',
+        image: 'assets/Phodong.jpg',
         description: 'Phodong Monastery, established in 1721, is a beautiful hilltop monastery offering panoramic views of the surrounding valleys. It serves as an important center for Kagyu Buddhist practices and meditation retreats.'
       }
     };
@@ -2209,3 +2209,4 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initialize Monastery Carousel
   new MonasteryCarousel();
 });
+
