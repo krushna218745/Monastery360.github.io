@@ -111,7 +111,7 @@ const monasteries = {
     founded: '1721',
     altitude: '1,300m',
     description: 'Phodong Monastery, located in North Sikkim about 28 km from Gangtok, is an important center of the Kagyu sect of Tibetan Buddhism. Built in the early 18th century by Chogyal Gyurmed Namgyal, it is known for its vibrant murals, ornate architecture, and serene surroundings. The monastery plays host to the annual Chaam festival, where monks perform sacred mask dances symbolizing the victory of good over evil. Overlooking the lush valleys and mountains, Phodong is not only a place of deep spiritual significance but also a cultural treasure that reflects Sikkim\'s Buddhist traditions.',
-    panorama: 'assets/Phondong.jpg',
+    panorama: 'assets/Phodong.jpg',
     audioGuide: 'assets/Phodong/Phodong_Introduction.mp3',
     panoramic360: 'https://www.google.com/maps/embed?pb=!4v1757781026313!6m8!1m7!1sCAoSF0NJSE0wb2dLRUlDQWdJREUtSTJBbXdF!2m2!1d27.41250043052966!2d88.58361050014649!3f347.6646480951512!4f-2.2862451613903403!5f0.7820865974627469',
     category: 'kagyu'
@@ -2209,4 +2209,5 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initialize Monastery Carousel
   new MonasteryCarousel();
 });
+
 
